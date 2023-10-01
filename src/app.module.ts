@@ -4,12 +4,15 @@ import { SequelizeModule, SequelizeModuleOptions } from '@nestjs/sequelize';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BannerModule } from './banner/banner.module';
+import appConfig from './config/app.config';
+import databaseConfig from './config/database.config';
 
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      load: [appConfig, databaseConfig]
     }),
     SequelizeModule.forRoot({
       dialect: 'mysql',
