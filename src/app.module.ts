@@ -3,6 +3,7 @@ import { SequelizeModule, SequelizeModuleOptions } from '@nestjs/sequelize';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BannerModule } from './banner/banner.module';
+import { CategoryModule } from './category/category.module';
 
 const defaultOption: SequelizeModuleOptions = {
   dialect: 'mysql',
@@ -21,6 +22,7 @@ const defaultOption: SequelizeModuleOptions = {
       autoLoadModels: true,
     }),
     BannerModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
