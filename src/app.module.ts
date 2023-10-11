@@ -1,34 +1,30 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SequelizeModule, SequelizeModuleOptions } from '@nestjs/sequelize';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BannerModule } from './banner/banner.module';
-import appConfig from './config/app.config';
-import databaseConfig from './config/database.config';
+import { CategoryModule } from './category/category.module';
 
+const defaultOption: SequelizeModuleOptions = {
+  dialect: 'mysql',
+  port: 3306,
+  username: 'root',
+  password: '',
+  synchronize: true,
+};
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      load: [appConfig, databaseConfig]
-    }),
     SequelizeModule.forRoot({
-      dialect: 'mysql',
-      port: parseInt(process.env.DB_PORT as string) as number,
-      username: process.env.DB_USERNAME as string,
-      password: process.env.DB_PASSWORD as string,
-      synchronize: true,
+      ...defaultOption,
       host: 'localhost',
       database: 'db_jagocommerce',
       autoLoadModels: true,
     }),
     BannerModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {
-
-}
+export class AppModule {}
